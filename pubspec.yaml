@@ -1,0 +1,34 @@
+name: portifolio
+description: collection of my works
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.2 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  animated_text_kit: ^4.2.2
+  cached_network_image: ^3.2.3
+  cupertino_icons: ^1.0.5
+  flutter_svg: ^1.1.6
+  google_fonts: ^3.0.1
+  http: ^0.13.5
+  intl: ^0.17.0
+  provider: ^6.0.4
+  i18n_extension: ^6.0.0
+  url_launcher: ^6.1.7
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/
+    - assets/images/
