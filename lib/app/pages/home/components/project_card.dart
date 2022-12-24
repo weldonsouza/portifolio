@@ -17,40 +17,45 @@ class ProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(Constants.defaultPadding),
-      color: Constants.secondaryColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            project.title!,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.subtitle2,
-          ),
-          const Spacer(),
-          Text(
-            project.description!,
-            maxLines: Responsive.isMobileLarge(context) ? 3 : 4,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(height: 1.5),
-          ),
-          const Spacer(),
-          TextButton(
-            onPressed: () {
-              navigationService.push(ProjectDetailsPage.routeName, arguments: project);
-            },
-            style: TextButton.styleFrom(tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-            child: Text(
-              "${labelReadMore.i18n} >>",
-              style: const TextStyle(
-                color: Constants.primaryColor,
+    return GestureDetector(
+      onTap: () {
+        navigationService.push(ProjectDetailsPage.routeName, arguments: project);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(Constants.defaultPadding),
+        color: Constants.secondaryColor,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              project.title!,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
+            const Spacer(),
+            Text(
+              project.description!,
+              maxLines: Responsive.isMobileLarge(context) ? 3 : 4,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(height: 1.5),
+            ),
+            const Spacer(),
+            TextButton(
+              onPressed: () {
+                navigationService.push(ProjectDetailsPage.routeName, arguments: project);
+              },
+              style: TextButton.styleFrom(tapTargetSize: MaterialTapTargetSize.shrinkWrap),
+              child: Text(
+                "${labelReadMore.i18n} >>",
+                style: const TextStyle(
+                  color: Constants.primaryColor,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

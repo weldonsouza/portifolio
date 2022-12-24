@@ -16,7 +16,7 @@ class AnimatedText extends StatelessWidget {
       animatedTexts: [
         for (var element in homeController.profile.projects!) ...[
           TyperAnimatedText(
-            '${labelIBuild.i18n} ${element.title!}',
+            '${labelIBuild.i18n} ${element.description!.substring(0, 60)}',
             speed: const Duration(milliseconds: 60),
           ),
         ],

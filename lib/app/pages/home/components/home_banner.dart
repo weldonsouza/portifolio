@@ -41,7 +41,7 @@ class HomeBanner extends StatelessWidget {
                 ),
                 if (Responsive.isMobileLarge(context)) const SizedBox(height: Constants.defaultPadding / 2),
                 const MyBuildAnimatedText(),
-                const SizedBox(height: Constants.defaultPadding),
+                /*const SizedBox(height: Constants.defaultPadding),
                 CustomElevatedButton(
                   width: 166,
                   height: 44,
@@ -55,7 +55,7 @@ class HomeBanner extends StatelessWidget {
                   paddingButtonLeft: 0,
                   paddingButtonRight: 0,
                   onTap: () {},
-                ),
+                ),*/
               ],
             ),
           )
