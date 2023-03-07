@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/responsive.dart';
 import '../../../../data/datasources/local/i18n/home.i18n.dart';
-import '../../../widgets/custom_elevated_button.dart';
 import 'my_build_animated_text.dart';
 
 class HomeBanner extends StatelessWidget {
@@ -41,21 +40,6 @@ class HomeBanner extends StatelessWidget {
                 ),
                 if (Responsive.isMobileLarge(context)) const SizedBox(height: Constants.defaultPadding / 2),
                 const MyBuildAnimatedText(),
-                /*const SizedBox(height: Constants.defaultPadding),
-                CustomElevatedButton(
-                  width: 166,
-                  height: 44,
-                  labelText: labelButton.i18n,
-                  borderRadius: 4,
-                  textSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Constants.primaryColor,
-                  colorButton: Constants.primaryColor,
-                  colorText: Constants.blackColor,
-                  paddingButtonLeft: 0,
-                  paddingButtonRight: 0,
-                  onTap: () {},
-                ),*/
               ],
             ),
           )

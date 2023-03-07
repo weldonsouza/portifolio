@@ -4,8 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/datasources/local/i18n/project_details.i18n.dart';
 
-var formatFraction = NumberFormat("#,##0.00", "pt_BR");
-
 class Utils {
   static mediaQuery(BuildContext context, double value, {String direction = 'V'}) {
     MediaQueryData mediaQuery = MediaQuery.of(context);

@@ -1,10 +1,10 @@
 name: portifolio
 description: collection of my works
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.2 <3.0.0'
+  sdk: '>=2.19.2 <3.0.0'
 
 dependencies:
   flutter:

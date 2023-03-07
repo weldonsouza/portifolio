@@ -13,6 +13,6 @@ class Constants {
   static const Color bgColor = Color(0xFF1E1E28);
 
   static const double defaultPadding = 20.0;
-  static const Duration defaultDuration = Duration(seconds: 1); // we use it on our animation
-  static const double maxWidth = 1440.0; // max width of our web
+  static const Duration defaultDuration = Duration(seconds: 1);
+  static const double maxWidth = 1440.0;
 }

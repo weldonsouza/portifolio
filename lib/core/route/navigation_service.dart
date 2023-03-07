@@ -7,24 +7,6 @@ final NavigationService navigationService = NavigationService();
 class NavigationService {
   static GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
-  static void showSnackBarMessage(String message, bool isSuccess) {
-    ScaffoldMessenger.of(NavigationService.navigationKey.currentContext!)
-      ..hideCurrentSnackBar
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            message,
-            style: TextStyle(
-              color: isSuccess ? Constants.blackColor : Constants.whiteColor,
-            ),
-          ),
-          backgroundColor: isSuccess
-              ? Constants.successSnackBarColor
-              : Constants.errorSnackBarColor,
-        ),
-      );
-  }
-
   Future<dynamic> push(String name, {Object? arguments}) async {
     return navigationKey.currentState?.pushNamed<dynamic>(
       name,

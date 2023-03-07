@@ -4,7 +4,6 @@ import '../../../data/datasources/local/i18n/project_data.i18n.dart';
 import '../../../domain/models/links_model.dart';
 import '../../../domain/models/profile_model.dart';
 import '../../../domain/models/project_model.dart';
-import '../../../domain/models/recommendation_model.dart';
 import '../../../domain/models/skill_model.dart';
 
 class HomeController with ChangeNotifier {
@@ -28,28 +27,7 @@ class HomeController with ChangeNotifier {
     findProfile();
   }
 
-  void dispose() {}
-
   Future<String> findProfile() async {
-    /*
-fev de 2017 - até o momento - E-nigma
-03/04/2020 - cielo_ecommerce
-12/04/2020 - flutter_credit_card_detector
-abr de 2019 - jun de 2021 - carajas
-jul de 2020 - jun de 2021 - Pricng
-05/12/2019', '30/06/2021 - orcamento_carajas
-'01/07/2019', '30/06/2021' - libcom
-Nov 18, 2020 - Feb 23, 2021 - shoes_app
-May 4, 2020 - May 14, 2020 - jobsearchapp
-jun de 2017 - abr de 2020 - Partiu
-
-mai de 2019 - jun de 2019- Consulta estoque Carajás
-set de 2016 - dez de 2016 - rotaMedi
-out de 2015 - nov de 2016 - TMath - Uma Ferramenta de Apoio no Aprendizado em Trigonometria
-
-17 de abr. de 2020 - Credit Card Detector
-*/
-
     setIsLoading(true);
     ProfileModel profileModel = ProfileModel(
       photo: 'https://avatars.githubusercontent.com/u/51387498?v=4',
@@ -199,28 +177,7 @@ out de 2015 - nov de 2016 - TMath - Uma Ferramenta de Apoio no Aprendizado em Tr
           link: 'https://play.google.com/store/apps/details?id=com.wr.tmath',
         ),
       ],
-      recommendation: [
-        /*RecommendationModel(
-          name: "Kolapo Obanewa",
-          source: "Linkedin",
-          text: labelRecommendation1.i18n,
-        ),
-        RecommendationModel(
-          name: "Reza Shahbazi",
-          source: "Linkedin",
-          text: labelRecommendation2.i18n,
-        ),
-        RecommendationModel(
-          name: "Diadem",
-          source: "YouTube",
-          text: labelRecommendation3.i18n,
-        ),
-        RecommendationModel(
-          name: "Roshan Shetty",
-          source: "YouTube",
-          text: labelRecommendation4.i18n,
-        ),*/
-      ],
+      recommendation: [],
     );
 
     setProfileModel(profileModel);
