@@ -2,27 +2,22 @@ class ProjectModel {
   final String? title;
   final String? description;
   final List<String>? duration;
-  final String? link;
+  final String? banner;
+  final String? typeProject;
+  final String? linkPackage;
+  final String? linkGooglePlay;
+  final String? linkAppPlay;
+  final String? linkGithub;
 
-  ProjectModel({
-    this.title,
+  const ProjectModel({
+    required this.title,
     this.description,
     this.duration,
-    this.link,
+    this.banner,
+    this.typeProject,
+    this.linkPackage,
+    this.linkGooglePlay,
+    this.linkAppPlay,
+    this.linkGithub,
   });
-
-  ProjectModel.fromJson(Map<String, dynamic> json)
-      : title = json['title'] as String?,
-        description = json['description'] as String?,
-        duration = (json['duration'] as List?)
-            ?.map((dynamic e) => e as String)
-            .toList(),
-        link = json['link'] as String?;
-
-  Map<String, dynamic> toJson() => {
-        'title': title,
-        'description': description,
-        'duration': duration,
-        'link': link,
-      };
 }

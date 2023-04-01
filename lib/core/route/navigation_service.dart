@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../utils/constants.dart';
-
 final NavigationService navigationService = NavigationService();
 
 class NavigationService {

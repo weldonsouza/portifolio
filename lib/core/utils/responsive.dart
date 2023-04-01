@@ -1,38 +1,86 @@
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
 
-class Responsive extends StatelessWidget {
-  final Widget mobile;
-  final Widget? mobileLarge;
-  final Widget? tablet;
-  final Widget desktop;
+import 'constants/values.dart';
 
-  const Responsive({
-    Key? key,
-    required this.mobile,
-    this.tablet,
-    required this.desktop,
-    this.mobileLarge,
-  }) : super(key: key);
+enum DisplayType {
+  desktop,
+  mobile,
+}
 
-  static bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 500;
+const _desktopPortraitBreakpoint = 700.0;
+const _desktopLandscapeBreakpoint = 1000.0;
+const _ipadProBreakpoint = 1000.0;
 
-  static bool isMobileLarge(BuildContext context) => MediaQuery.of(context).size.width <= 700;
+/// Returns the [DisplayType] for the current screen. This app only supports
+/// mobile and desktop layouts, and as such we only have one breakpoint.
+DisplayType displayTypeOf(BuildContext context) {
+  final orientation = MediaQuery.of(context).orientation;
+  final width = MediaQuery.of(context).size.width;
 
-  static bool isTablet(BuildContext context) => MediaQuery.of(context).size.width < 1024;
-
-  static bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width >= 1024;
-
-  @override
-  Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    if (size.width >= 1024) {
-      return desktop;
-    } else if (size.width >= 700 && tablet != null) {
-      return tablet!;
-    } else if (size.width >= 500 && mobileLarge != null) {
-      return mobileLarge!;
-    } else {
-      return mobile;
-    }
+  if ((orientation == Orientation.landscape &&
+          width > _desktopLandscapeBreakpoint) ||
+      (orientation == Orientation.portrait &&
+          width > _desktopPortraitBreakpoint)) {
+    return DisplayType.desktop;
+  } else {
+    return DisplayType.mobile;
   }
+}
+
+/// Returns a boolean if we are in a display of [DisplayType.desktop]. Used to
+/// build adaptive and responsive layouts.
+bool isDisplayDesktop(BuildContext context) {
+  return displayTypeOf(context) == DisplayType.desktop;
+}
+
+/// Returns a boolean if we are in a display of [DisplayType.desktop] but less
+/// than [_desktopLandscapeBreakpoint] width. Used to build adaptive and responsive layouts.
+bool isDisplaySmallDesktop(BuildContext context) {
+  return isDisplayDesktop(context) &&
+      MediaQuery.of(context).size.width < _desktopLandscapeBreakpoint;
+}
+
+bool isDisplaySmallDesktopOrIpadPro(BuildContext context) {
+  return isDisplaySmallDesktop(context) ||
+      (MediaQuery.of(context).size.width > _ipadProBreakpoint &&
+          MediaQuery.of(context).size.width < 1170);
+}
+
+double widthOfScreen(BuildContext context) {
+  return MediaQuery.of(context).size.width;
+}
+
+double heightOfScreen(BuildContext context) {
+  return MediaQuery.of(context).size.height;
+}
+
+double assignHeight(
+  BuildContext context,
+  double fraction, {
+  double additions = 0.0,
+  double subs = 0.0,
+}) {
+  return (heightOfScreen(context) - (subs) + (additions)) * fraction;
+}
+
+double assignWidth(
+  BuildContext context,
+  double fraction, {
+  double additions = 0,
+  double subs = 0,
+}) {
+  return (widthOfScreen(context) - (subs) + (additions)) * fraction;
+}
+
+double getSidePadding(BuildContext context) {
+  double sidePaddingDesktop = widthOfScreen(context) / Sizes.DIVISIONS_DESKTOP;
+  double sidePaddingMobile = widthOfScreen(context) / Sizes.DIVISIONS_MOBILE;
+  return context.layout.value(
+    xs: sidePaddingMobile,
+    sm: sidePaddingDesktop,
+    md: sidePaddingDesktop,
+    lg: sidePaddingDesktop,
+    xl: sidePaddingDesktop,
+  );
 }

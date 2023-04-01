@@ -1,18 +1,9 @@
 class SkillModel {
-  final String? name;
-  final double? percentage;
-
   SkillModel({
-    this.name,
-    this.percentage,
+    required this.skillName,
+    required this.skillLevel,
   });
 
-  SkillModel.fromJson(Map<String, dynamic> json)
-      : name = json['name'] as String?,
-        percentage = json['percentage'] as double?;
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'percentage': percentage,
-      };
+  final String skillName;
+  final double skillLevel;
 }
