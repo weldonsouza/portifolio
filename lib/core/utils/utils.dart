@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../data/datasources/local/i18n/project_details.i18n.dart';
 
 class Utils {
   static mediaQuery(BuildContext context, double value, {String direction = 'V'}) {
@@ -15,16 +12,6 @@ class Utils {
     }
   }
 
-  static String formatDate(input) {
-    if (input.isEmpty) {
-      return labelUntilMoment.i18n;
-    } else {
-      List date = input.split('/');
-
-      return DateFormat('MMM yyyy').format(DateFormat('yyyy-MM-dd').parse('${date[2]}-${date[1]}-${date[0]}'));
-    }
-  }
-
   static Future<void> launchInBrowser(String url) async {
     final Uri urlLaunch = Uri.parse(url);
 
@@ -34,5 +21,12 @@ class Utils {
     )) {
       throw 'Could not launch $urlLaunch';
     }
+  }
+
+  static scrollToSection(BuildContext context) {
+    Scrollable.ensureVisible(
+      context,
+      duration: const Duration(milliseconds: 600),
+    );
   }
 }
