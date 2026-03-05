@@ -1,17 +1,16 @@
+/// Modelo de experiência profissional.
 class ExperienceModel {
-  ExperienceModel({
-    required this.title,
-    required this.titleUrl,
-    this.subtitle,
-    required this.body,
-    required this.location,
-    required this.duration,
+  const ExperienceModel({
+    required this.period,
+    required this.role,
+    required this.company,
+    required this.description,
+    required this.tags,
   });
 
-  final String title;
-  final String titleUrl;
-  final String location;
-  final String duration;
-  final String? subtitle;
-  final List<String> body;
+  final String period;
+  final String role;
+  final String company;
+  final String description;
+  final List<String> tags;
 }

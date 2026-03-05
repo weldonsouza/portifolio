@@ -1,13 +1,10 @@
-import 'package:flutter/material.dart';
-
+/// Modelo de item do menu de navegação.
 class NavItemModel {
-  final String name;
-  final GlobalKey key;
-  bool isSelected;
-
-  NavItemModel({
-    required this.name,
-    required this.key,
-    this.isSelected = false,
+  const NavItemModel({
+    required this.label,
+    required this.sectionId,
   });
+
+  final String label;
+  final String sectionId;
 }
