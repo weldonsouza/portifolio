@@ -17,7 +17,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MenuProvider()),
       ],
       child: MaterialApp(
-        title: 'Weldon Souza | Senior Software Engineer | Flutter Specialist | Mobile Architecture | White Label Architect | Ex-Android Native',
+        title: 'Portfolio',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.dark,
         home: const HomePage(),

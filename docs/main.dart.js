@@ -62347,7 +62347,7 @@ A.YB.prototype={
 QL(a){$.aaV().m(0,this,a)}}
 A.At.prototype={
 M(a){var s=A.c([A.aeH(new A.OD(),t.At),A.aeH(new A.OE(),t.QU)],t.Ds)
-return A.apR(new A.um(B.AD,"Weldon Souza | Senior Software Engineer | Flutter Specialist | Mobile Architecture | White Label Architect | Ex-Android Native",A.acF(B.ab,B.yd,B.ax,!0),!1,null),s)}}
+return A.apR(new A.um(B.AD,"Portfolio",A.acF(B.ab,B.yd,B.ax,!0),!1,null),s)}}
 A.OD.prototype={
 $1(a){return new A.hU($.aO())},
 $S:384}
