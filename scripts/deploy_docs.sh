@@ -12,7 +12,7 @@ flutter pub get
 # Se o nome do repositório for outro, altere BASE_HREF (ex.: /meu-portfolio/)
 BASE_HREF="/portifolio/"
 echo "→ flutter build web (base-href $BASE_HREF)"
-flutter build web --base-href "$BASE_HREF"
+flutter build web --base-href "/portifolio/"
 
 echo "→ Limpando docs/ e copiando build/web → docs/"
 rm -rf docs/*
