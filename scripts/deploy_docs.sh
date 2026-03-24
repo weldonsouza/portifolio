@@ -20,3 +20,7 @@ cp -R build/web/* docs/
 
 echo "✓ Pronto. Faça commit e push da pasta docs/ para atualizar o GitHub Pages."
 echo "  Ex.: git add docs && git commit -m 'chore: atualiza build para GitHub Pages' && git push"
+
+flutter build web --base-href "/portifolio/"
+rm -rf docs/*
+cp -R build/web/* docs/
