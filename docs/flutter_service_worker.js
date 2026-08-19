@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"flutter_bootstrap.js": "1c7908fb273acbf9b4115ac433515a5e",
+const RESOURCES = {"flutter_bootstrap.js": "7e2462530d9c2f412ceb2ebc113e4dde",
 "version.json": "061068e2c9bf138d06622981ae841092",
 "index.html": "54d5e74b0befad47478b7a266c4029f4",
 "/": "54d5e74b0befad47478b7a266c4029f4",
@@ -26,7 +26,7 @@ const RESOURCES = {"flutter_bootstrap.js": "1c7908fb273acbf9b4115ac433515a5e",
 "assets/shaders/stretch_effect.frag": "40d68efbbf360632f614c731219e95f0",
 "assets/AssetManifest.bin": "2ea7e409983e3c6d9a7b036d5469a6b4",
 "assets/fonts/MaterialIcons-Regular.otf": "184547cc2662bb32e84a702bd8d2891e",
-"assets/assets/images/prox.png": "ef295c2d8379465ed34d5500d4e4b1b9",
+"assets/assets/images/prox.png": "b1da8e268a34f8179c140ab4114a3087",
 "assets/assets/images/banco_modal.png": "e9aea5ce9f01c5263e824ef4f1724e38",
 "assets/assets/images/veriqs.png": "c5b14c2926bd62240541c6f042da3495",
 "canvaskit/skwasm.js": "8060d46e9a4901ca9991edd3a26be4f0",
