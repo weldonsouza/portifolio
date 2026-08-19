@@ -48,6 +48,16 @@ class PortfolioLocalData {
       websiteUrl: 'https://www.modalmais.com.br/',
     ),
     FeaturedProjectModel(
+      title: 'Kuantos',
+      description: 'Gestão para autônomos, lojas e pequenos negócios: registre vendas em poucos toques, controle o estoque com alertas, envie orçamentos e catálogos em PDF e cobre o crediário direto no WhatsApp. Dashboard de receitas, despesas, saldo e lucro na palma da mão.',
+      tags: ['Flutter', 'Gestão', 'WhatsApp', 'Estoque', 'Crediário'],
+      imageAsset: 'assets/images/kuantos.png',
+      websiteUrl: 'https://kuantos.com.br/',
+      playStoreUrl: 'https://play.google.com/store/apps/details?id=com.deviqs.kuantos',
+      appStoreUrl: 'https://apps.apple.com/br/app/kuantos/id6767534537',
+      accentLabel: 'WhatsApp · Crediário · Estoque',
+    ),
+    FeaturedProjectModel(
       title: 'Veriqs',
       description: 'Arquitetura e desenvolvimento de uma solução completa para inspeções. Integração nativa com tecnologia NFC e GPS, focada em rastreabilidade e automação de processos operacionais.',
       tags: ['Flutter', 'NFC', 'GPS', 'Visão 360º', 'Inspeção'],
@@ -55,6 +65,7 @@ class PortfolioLocalData {
       websiteUrl: 'https://www.veriqs.com/',
       playStoreUrl: 'https://play.google.com/store/apps/details?id=com.neduki.veriqs',
       appStoreUrl: 'https://apps.apple.com/br/app/veriqs/id6757703689',
+      accentLabel: 'NFC · Geolocalização',
     ),
   ];
 

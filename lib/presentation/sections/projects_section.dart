@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,7 +35,6 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   void initState() {
     super.initState();
     _otherProjectsController = PageController();
-    _startOtherProjectsAutoCarousel();
   }
 
   @override
@@ -80,7 +78,10 @@ class _ProjectsSectionState extends State<ProjectsSection> {
       onVisibilityChanged: (info) {
         if (info.visibleFraction > 0.05 && !_visible) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            if (mounted) setState(() => _visible = true);
+            if (mounted) {
+              setState(() => _visible = true);
+              _startOtherProjectsAutoCarousel();
+            }
           });
         }
       },
@@ -115,8 +116,9 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                 ...PortfolioLocalData.featuredProjects.asMap().entries.map((e) {
                   final i = e.key;
                   final project = e.value;
+                  final isLast = i == PortfolioLocalData.featuredProjects.length - 1;
                   return Padding(
-                    padding: EdgeInsets.only(bottom: i < 2 ? 80 : 0),
+                    padding: EdgeInsets.only(bottom: isLast ? 0 : 80),
                     child: AnimatedOpacity(
                       opacity: _visible ? 1 : 0,
                       duration: const Duration(milliseconds: 700),
@@ -125,9 +127,11 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                         offset: _visible ? Offset.zero : const Offset(0, 0.2),
                         duration: Duration(milliseconds: 700 + ((i + 1) * 150)),
                         curve: Curves.easeOut,
-                        child: _FeaturedProjectCard(
-                          project: project,
-                          isEven: i % 2 == 0,
+                        child: RepaintBoundary(
+                          child: _FeaturedProjectCard(
+                            project: project,
+                            isEven: i % 2 == 0,
+                          ),
                         ),
                       ),
                     ),
@@ -148,11 +152,13 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                _OtherProjectsCarousel(
-                  visible: _visible,
-                  pageController: _otherProjectsController,
-                  pages: _chunkedOtherProjects(),
-                  onPageChanged: (index) => _otherProjectsPage = index,
+                RepaintBoundary(
+                  child: _OtherProjectsCarousel(
+                    visible: _visible,
+                    pageController: _otherProjectsController,
+                    pages: _chunkedOtherProjects(),
+                    onPageChanged: (index) => _otherProjectsPage = index,
+                  ),
                 ),
               ],
             ),
@@ -382,52 +388,81 @@ class _FeaturedProjectCardState extends State<_FeaturedProjectCard> {
   }
 
   Widget _buildImage() {
+    final dpr = MediaQuery.devicePixelRatioOf(context);
+    final cacheWidth = (900 * dpr).round().clamp(720, 1600);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _hover = true),
       onExit: (_) => setState(() => _hover = false),
-      child: AspectRatio(
-        aspectRatio: 16 / 9,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(AppSizes.radiusDefault),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0, end: _hover ? 1 : 0),
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeOut,
-                builder: (context, t, child) {
-                  return ColorFiltered(
-                    colorFilter: ColorFilter.matrix(_lerpMatrix(t)),
-                    child: Transform.scale(scale: _imageScale, child: child),
-                  );
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Image.asset(
-                    widget.project.imageAsset,
-                    fit: BoxFit.fitWidth,
+      child: RepaintBoundary(
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppSizes.radiusDefault),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                TweenAnimationBuilder<double>(
+                  tween: Tween<double>(begin: 0, end: _hover ? 1 : 0),
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeOut,
+                  builder: (context, t, child) {
+                    return ColorFiltered(
+                      colorFilter: ColorFilter.matrix(_lerpMatrix(t)),
+                      child: Transform.scale(scale: _imageScale, child: child),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: Image.asset(
+                      widget.project.imageAsset,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                      filterQuality: FilterQuality.medium,
+                      gaplessPlayback: true,
+                      cacheWidth: cacheWidth,
+                    ),
                   ),
                 ),
-              ),
-              TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0, end: _hover ? 0 : 1),
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOut,
-                builder: (context, t, _) {
-                  return ColoredBox(
-                    color: AppColors.primary.withValues(alpha: 0.2 * t),
-                  );
-                },
-              ),
-            ],
+                TweenAnimationBuilder<double>(
+                  tween: Tween<double>(begin: 0, end: _hover ? 0 : 1),
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                  builder: (context, t, _) {
+                    return ColoredBox(
+                      color: AppColors.primary.withValues(alpha: 0.2 * t),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  List<Widget> _accentIcons() {
+    switch (widget.project.title) {
+      case 'Kuantos':
+        return [
+          FaIcon(FontAwesomeIcons.whatsapp, size: 18, color: AppColors.primary),
+          Icon(Icons.inventory_2_outlined, size: 20, color: AppColors.primary),
+        ];
+      case 'Veriqs':
+        return [
+          Icon(Icons.nfc, size: 22, color: AppColors.primary),
+          Icon(Icons.location_on, size: 22, color: AppColors.primary),
+        ];
+      default:
+        return const [];
+    }
+  }
+
   Widget _buildContent(CrossAxisAlignment crossAlign, TextAlign textAlign) {
+    final accentLabel = widget.project.accentLabel;
+    final accentIcons = _accentIcons();
+
     return Column(
       crossAxisAlignment: crossAlign,
       children: [
@@ -440,17 +475,18 @@ class _FeaturedProjectCardState extends State<_FeaturedProjectCard> {
           widget.project.title,
           style: AppTypography.projectTitleDesktop(MediaQuery.of(context).size.width),
         ),
-        if (widget.project.title == 'Veriqs') ...[
+        if (accentLabel != null && accentLabel.isNotEmpty) ...[
           const SizedBox(height: 12),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.nfc, size: 22, color: AppColors.primary),
-              const SizedBox(width: 12),
-              Icon(Icons.location_on, size: 22, color: AppColors.primary),
-              const SizedBox(width: 8),
+              for (var i = 0; i < accentIcons.length; i++) ...[
+                if (i > 0) const SizedBox(width: 12),
+                accentIcons[i],
+              ],
+              if (accentIcons.isNotEmpty) const SizedBox(width: 8),
               Text(
-                'NFC · Geolocalização',
+                accentLabel,
                 style: AppTypography.tagMono.copyWith(
                   color: AppColors.mutedForeground,
                   fontSize: 12,
@@ -460,30 +496,24 @@ class _FeaturedProjectCardState extends State<_FeaturedProjectCard> {
           ),
         ],
         const SizedBox(height: 16),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(AppSizes.radiusDefault),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: AppColors.backgroundCard.withOpacity(0.7),
-                borderRadius: BorderRadius.circular(AppSizes.radiusDefault),
-                border: Border.all(color: AppColors.border),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 16,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundCard.withValues(alpha: 0.92),
+            borderRadius: BorderRadius.circular(AppSizes.radiusDefault),
+            border: Border.all(color: AppColors.border),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.2),
+                blurRadius: 16,
+                offset: const Offset(0, 4),
               ),
-              child: Text(
-                widget.project.description,
-                style: AppTypography.bodySm,
-                textAlign: textAlign,
-              ),
-            ),
+            ],
+          ),
+          child: Text(
+            widget.project.description,
+            style: AppTypography.bodySm,
+            textAlign: textAlign,
           ),
         ),
         const SizedBox(height: 16),

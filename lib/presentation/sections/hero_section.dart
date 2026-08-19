@@ -62,7 +62,9 @@ class _HeroSectionState extends State<HeroSection>
                               offset: _visible ? Offset.zero : const Offset(0, 0.3),
                               duration: const Duration(milliseconds: 1000),
                               curve: Curves.easeOut,
-                              child: const PhoneMockupWidget(),
+                              child: const RepaintBoundary(
+                                child: PhoneMockupWidget(),
+                              ),
                             ),
                           ),
                         ],

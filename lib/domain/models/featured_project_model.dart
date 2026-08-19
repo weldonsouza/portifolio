@@ -5,6 +5,7 @@ class FeaturedProjectModel {
     required this.description,
     required this.tags,
     required this.imageAsset,
+    this.accentLabel,
     this.playStoreUrl,
     this.appStoreUrl,
     this.githubUrl,
@@ -15,6 +16,7 @@ class FeaturedProjectModel {
   final String description;
   final List<String> tags;
   final String imageAsset;
+  final String? accentLabel;
   final String? playStoreUrl;
   final String? appStoreUrl;
   final String? githubUrl;

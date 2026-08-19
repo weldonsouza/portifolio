@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:portifolio/core/constants/app_sizes.dart';
@@ -43,10 +41,10 @@ class HeaderWidget extends StatelessWidget {
               duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
                 color: scroll.isScrolled
-                    ? AppColors.background.withValues(alpha: 0.85)
+                    ? AppColors.background.withValues(alpha: 0.92)
                     : Colors.transparent,
                 border: scroll.isScrolled
-                    ? Border(
+                    ? const Border(
                         bottom: BorderSide(
                           color: AppColors.border50,
                           width: 1,
@@ -54,23 +52,13 @@ class HeaderWidget extends StatelessWidget {
                       )
                     : null,
               ),
-              child: scroll.isScrolled
-                  ? ClipRect(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                        child: _buildContent(context, scroll, menu),
-                      ),
-                    )
-                  : _buildContent(context, scroll, menu),
+              child: _buildContent(context, scroll, menu),
             ),
             if (menu.isOpen && MediaQuery.sizeOf(context).width < AppSizes.breakpointMd)
-              ClipRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                  child: Container(
+              Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppColors.background.withOpacity(0.95),
+                      color: AppColors.background.withValues(alpha: 0.96),
                       border: const Border(bottom: BorderSide(color: AppColors.border)),
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 32),
@@ -97,8 +85,6 @@ class HeaderWidget extends StatelessWidget {
                         );
                       }).toList(),
                     ),
-                  ),
-                ),
               ),
           ],
         );

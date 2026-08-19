@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:portifolio/core/theme/app_colors.dart';
+import 'package:portifolio/data/datasources/portfolio_local_data.dart';
 import 'package:portifolio/presentation/providers/scroll_provider.dart';
 import 'package:portifolio/presentation/sections/about_section.dart';
 import 'package:portifolio/presentation/sections/contact_section.dart';
@@ -20,7 +22,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
-  DateTime _lastScrollUpdate = DateTime.now();
+  DateTime _lastScrollUpdate = DateTime.fromMillisecondsSinceEpoch(0);
+  bool _belowFoldReady = false;
 
   final Map<String, GlobalKey> _sectionKeys = {
     'hero': GlobalKey(),
@@ -34,6 +37,23 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      Future<void>.delayed(const Duration(milliseconds: 120), () {
+        if (!mounted) return;
+        setState(() => _belowFoldReady = true);
+        _precacheProjectImages();
+      });
+    });
+  }
+
+  void _precacheProjectImages() {
+    SchedulerBinding.instance.scheduleTask(() {
+      if (!mounted) return;
+      for (final project in PortfolioLocalData.featuredProjects) {
+        precacheImage(AssetImage(project.imageAsset), context);
+      }
+    }, Priority.idle);
   }
 
   @override
@@ -45,7 +65,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onScroll() {
     final now = DateTime.now();
-    if (now.difference(_lastScrollUpdate).inMilliseconds < 50) return;
+    if (now.difference(_lastScrollUpdate).inMilliseconds < 80) return;
     _lastScrollUpdate = now;
 
     context.read<ScrollProvider>().update(
@@ -77,27 +97,31 @@ class _HomePageState extends State<HomePage> {
             child: ColoredBox(
               color: AppColors.background,
               child: Column(
-              children: [
-                HeroSection(
-                  sectionKey: _sectionKeys['hero'],
-                  onCtaTap: _scrollToContact,
-                ),
-                AboutSection(sectionKey: _sectionKeys['sobre']),
-                ProjectsSection(sectionKey: _sectionKeys['projetos']),
-                ExperienceSection(sectionKey: _sectionKeys['experiencia']),
-                ContactSection(sectionKey: _sectionKeys['contato']),
-                const FooterSection(),
-              ],
-            ),
+                children: [
+                  HeroSection(
+                    sectionKey: _sectionKeys['hero'],
+                    onCtaTap: _scrollToContact,
+                  ),
+                  if (_belowFoldReady) ...[
+                    AboutSection(sectionKey: _sectionKeys['sobre']),
+                    ProjectsSection(sectionKey: _sectionKeys['projetos']),
+                    ExperienceSection(sectionKey: _sectionKeys['experiencia']),
+                    ContactSection(sectionKey: _sectionKeys['contato']),
+                    const FooterSection(),
+                  ],
+                ],
+              ),
             ),
           ),
           Positioned(
             top: 0,
             left: 0,
             right: 0,
-            child: HeaderWidget(
-              sectionKeys: _sectionKeys,
-              scrollController: _scrollController,
+            child: RepaintBoundary(
+              child: HeaderWidget(
+                sectionKeys: _sectionKeys,
+                scrollController: _scrollController,
+              ),
             ),
           ),
         ],
